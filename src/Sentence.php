@@ -159,8 +159,10 @@ class Sentence
         $is_terminal = in_array($chars[0], $terminals);
 
         $part = '';
-        foreach ($chars as $char) {
-            if (in_array($char, $terminals) !== $is_terminal) {
+        foreach ($chars as $key => $char) {
+            $nextChar = isset($chars[$key + 1]) ? $chars[$key + 1] : '';
+            $checkChar = sprintf('%s%s', $char, $nextChar); //try to find something like ". ", "! " or "? "
+            if (in_array($checkChar, $terminals) !== $is_terminal) {
                 $parts[] = $part;
                 $part = '';
                 $is_terminal = !$is_terminal;
